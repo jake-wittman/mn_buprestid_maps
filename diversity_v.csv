@@ -1,0 +1,21 @@
+site,t_Acmaeodera pulchella,t_Actenodes acornis,t_Actenodes simi,t_Agrilus anxius,t_Agrilus arcuatus,t_Agrilus bilineatus,t_Agrilus carpini,t_Agrilus celti,t_Agrilus cliftoni,t_Agrilus difficilis,t_Agrilus egeniformis,t_Agrilus egenus,t_Agrilus granulatus,t_Agrilus juglandis,t_Agrilus lecontei,t_Agrilus obsoletoguttatus,t_Agrilus pensus,t_Agrilus planipennis,t_Agrilus politus,t_Agrilus quadriguttatus,t_Agrilus vittaticollis,t_Brachys ovatus,t_Buprestis consularis,t_Buprestis maculativentris,t_Buprestis striata,t_Chrysobothris adelpha,t_Chrysobothris azurea,t_Chrysobothris cribraria,t_Chrysobothris dentipes,t_Chrysobothris femorata,t_Chrysobothris orono,t_Chrysobothris neopusilla,t_Chrysobothris pusilla,t_Chrysobothris rotundicollis,t_Chrysobothris rugosiceps,t_Chrysobothris sexsignata,t_Chrysobothris viridiceps,t_Dicerca asperata,t_Dicerca callosa,t_Dicerca caudata,t_Dicerca divarcata,t_Dicerca lugubris,t_Dicerca lurida,t_Dicerca tenebrica,t_Dicerca tenebrosa,t_Eupristocerus cogitans,t_Phaenops aeneola,t_Poecilonota cyanipes,t_Poecilonota ferrea,t_Poecilonota thureura,t_Spectralia gracilipes,sums
+AG,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,16,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,44
+AP,0,0,0,0,3,2,0,0,0,2,0,0,20,3,0,0,0,4,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,2,0,0,0,47
+BC,0,2,0,1,6,0,0,1,0,19,1,0,1,0,0,0,0,11,0,0,0,0,4,0,1,0,0,0,0,2,0,0,0,0,0,6,3,0,0,8,0,0,0,9,4,0,0,2,0,0,1,82
+BP,0,0,0,4,4,8,0,0,0,1,0,0,22,0,1,3,2,0,5,8,0,0,9,3,1,0,0,0,0,3,0,0,0,0,0,2,0,0,0,11,3,0,0,26,1,5,0,11,0,0,0,133
+EH,0,0,0,0,11,6,0,0,0,0,0,0,0,0,0,1,0,4,2,0,0,0,0,0,0,1,3,0,0,6,0,0,0,0,0,3,10,0,0,2,2,0,0,1,0,0,0,0,0,0,4,56
+FH,0,0,0,0,2,0,0,0,0,0,0,0,12,0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,0,0,0,0,0,0,0,1,22
+GE,0,0,0,0,0,0,0,0,0,3,1,0,0,0,2,0,0,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,52
+GL,0,2,0,0,18,20,0,0,0,8,0,0,21,0,0,3,0,4,6,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,1,1,0,0,2,0,0,0,5,0,0,2,98
+MB,1,0,1,3,2,5,1,0,0,0,0,0,3,0,0,2,1,0,2,5,0,1,10,7,5,0,0,0,0,2,0,0,1,1,0,7,6,3,0,28,30,0,6,13,9,6,3,4,3,0,3,174
+NE,0,0,0,1,5,3,0,0,0,0,0,0,9,0,0,0,0,0,1,0,0,2,2,3,21,0,0,1,0,0,1,0,0,3,0,3,0,0,1,19,18,3,0,34,10,1,2,4,9,0,0,156
+NS,0,2,0,0,0,2,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,3,0,0,0,0,1,0,0,0,0,1,3,1,0,0,5,29,0,1,2,4,0,2,1,0,0,0,61
+SH,0,0,0,0,0,1,4,0,0,0,0,1,2,0,0,0,0,0,0,9,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,5,4,0,0,0,0,0,0,0,0,0,0,30
+SP,0,0,0,1,0,8,0,0,0,0,0,0,5,0,0,6,0,0,10,0,0,2,2,1,0,0,0,0,0,0,0,0,0,0,0,1,3,1,0,16,1,0,0,0,0,1,0,1,0,0,0,59
+TB,0,0,0,2,5,6,0,0,0,0,0,0,11,0,0,2,0,0,0,0,0,0,1,0,0,0,0,0,0,4,0,0,0,0,0,1,1,0,0,20,2,0,0,19,0,0,0,2,0,1,3,80
+TF,1,0,1,4,5,2,4,0,1,0,0,0,4,1,0,6,1,0,0,1,1,2,16,2,7,0,0,0,0,5,0,0,0,2,1,16,5,12,0,8,62,0,25,17,1,0,2,1,1,0,0,217
+TL,0,0,0,2,2,0,0,0,0,1,0,0,10,0,0,0,8,1,14,4,0,0,3,2,0,0,0,0,0,0,0,0,0,0,0,3,1,0,0,3,2,0,0,1,2,16,0,5,0,0,0,80
+TP,0,0,0,7,31,11,1,0,0,1,0,0,18,0,0,7,1,0,6,1,0,1,3,8,1,0,1,1,0,7,0,1,0,0,0,6,3,2,0,112,51,0,0,7,2,16,0,20,1,0,0,327
+WP,0,3,0,2,0,3,0,0,1,0,0,0,10,0,1,0,0,1,1,1,1,0,4,0,4,1,0,0,1,2,0,0,0,2,0,2,5,0,0,16,8,0,2,6,0,0,0,3,1,0,6,87
+ZP,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,66
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

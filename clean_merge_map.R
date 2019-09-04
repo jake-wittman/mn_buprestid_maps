@@ -5,13 +5,33 @@ pacman::p_load(lubridate)
 pacman::p_load(magrittr)
 pacman::p_load(maps)
 pacman::p_load(tidyverse)
+pacman::p_load(cowplot)
+pacman::p_load(ggsn)
+pacman::p_load(ggmap)
+pacman::p_load(grid)
 
-
+conflict_prefer("filter", "dplyr")
 
 # Data loading and cleaning ----------------------------------------------------
 # Buprestid catalog data
-buprestid_catalog <- read.csv("buprestid_catalog.csv")
+buprestid_catalog <- read.csv(here::here("buprestidcat.csv"))
 
+sites <- read.csv(here::here("sitetotals_v.csv")) %>% 
+   select(site, lat, long)
+
+sites <- sites %>%
+   mutate(
+      year = case_when(
+         site == "AG" |
+            site == "BC" |
+            site == "BP" |
+            site == "FH" |
+            site == "GL" |
+            site == "MB" |
+            site == "NS" | site == "SH" | site == "SP" | site == "TF" ~ 2017,
+         TRUE ~ 2018
+      )
+   )
 
 # Mapping data
 # Minnesota county information Use the maps package and get the unique county ID
@@ -241,7 +261,7 @@ for (i in unique(mn_buprestids_map$scientificname)) {
       # Use barheight to change the height of the legend bar so the numbers
       # aren't smushed. This will also require trial and error. Also, I have no
       # idea what unit it is in.
-      guides(fill = guide_colorbar(barheight = 4))
+      guides(fill = guide_colorbar(barheight = 4)) 
 }
 
 ### Check the plots ###
@@ -263,12 +283,12 @@ abundance_file_names <- as.list(paste0(spp_names, "_abundance", ".jpeg"))
 # to them to save a plot with a particular file name
 # You can tell ggsave about how you want to save the file by adding more
 # arguments after the ggsave argument
-map2(abundance_file_names, abundance_plot_list, # the 2 lists to map over
-     ggsave, # function to apply
-     height = 3.5, # additional arguments to ggsave
-     width = 2.67,
-     units = "in",
-     dpi = 300)
+# map2(abundance_file_names, abundance_plot_list, # the 2 lists to map over
+#      ggsave, # function to apply
+#      height = 3.5, # additional arguments to ggsave
+#      width = 2.67,
+#      units = "in",
+#      dpi = 300)
 
 
 
@@ -320,7 +340,11 @@ for (i in unique(mn_buprestids_map$scientificname)) {
          # Use legend.key.size to set the size of legend. You'll need to play
          # with this so the legend displays at an appropriate size once you save
          # the maps.
-         theme(legend.key.size = unit(0.2, "cm"))
+         theme(legend.key.size = unit(0.2, "cm")) +
+         scale_x_continuous(limits = c(min(subset_buprestids$long),
+                                       max(subset_buprestids$long))) +
+         scale_y_continuous(limits = c(min(subset_buprestids$lat),
+                                       max(subset_buprestids$lat)))
 }
 
 
@@ -338,10 +362,149 @@ collected_file_names <- as.list(paste0(spp_names, "_collected", ".jpeg"))
 # Now we have two lists: one with 42 plots and one with 42 names. We can use the
 # map function to take these two lists together, and apply the ggsave function
 # to them to save a plot with a particular file name
-map2(collected_file_names, collected_plot_list,
-     ggsave,
-     height = 3.5, # additional arguments to ggsave
-     width = 2.67,
-     units = "in",
-     dpi = 300)
+# map2(collected_file_names, collected_plot_list,
+#      ggsave,
+#      height = 3.5, # additional arguments to ggsave
+#      width = 2.67,
+#      units = "in",
+#      dpi = 300)
 
+combined_maps <- map2(abundance_plot_list, collected_plot_list, plot_grid, ncol = 2)
+
+
+
+
+# Site map ----------------------------------------------------------------
+sites$year <- as.factor(sites$year)
+sites$Year <- sites$year
+
+site_map <-
+   ggplot(mn_coords, aes(x = long, y = lat, group = group)) +
+   geom_polygon(fill = "white", colour = "black") +
+   coord_fixed(1.3) +
+   # Theme_void removes all color from outside the minnesota boundary
+   theme_void() +
+   geom_jitter(data = sites,
+              aes(
+                 x = long,
+                 y = lat,
+                 group = NULL,
+                 colour = Year
+              ),
+              size = 0.7,
+              alpha = 0.65,
+              width = 0.01) +
+   scalebar(
+      data = mn_coords,
+      dist = 50,
+      st.size = 2,
+      height = 0.02,
+      model = 'WGS84',
+      transform = T,
+      dist_unit = "km"
+   ) +
+   north(mn_coords, symbol = 3, scale = 0.15) +
+   scale_fill_manual(values = c("red", "yellow"),
+                     aes(x = long, y = lat))
+
+   
+
+ggsave("sitemap.tiff",
+       plot = site_map,
+       units = "mm",
+       width = 84,
+       dpi = 600)
+
+
+# Wasp radius map
+
+# Set API
+key <- read.table(here::here("ggmaps_id.txt"),
+                  stringsAsFactors = FALSE)
+key <- key[1, 1]
+register_google(key = key)
+
+
+# Make map
+
+# create circles data frame from the centers data frame
+make_circles <- function(centers, radius, nPoints = 100) {
+   # centers: the data frame of centers with name
+   # radius: radius measured in kilometer - have to  convert
+   radius <- radius / 1000
+   meanLat <- mean(centers$lat)
+   # length per longitude changes with lattitude, so need correction
+   radiusLon <- radius / 111 / cos(meanLat / 57.3)
+   radiusLat <- radius / 111
+   circleDF <- data.frame(name = rep(centers$name, each = nPoints))
+   angle <- seq(0, 2 * pi, length.out = nPoints)
+   
+   circleDF$lon <-
+      unlist(map2(centers$lon, radiusLon, function(.x, .y) {
+         .x + .y * cos(angle)
+      }))
+   circleDF$lat <-
+      unlist(map2(centers$lat, radiusLat, function(.x, .y) {
+         .x + .y * sin(angle)
+      }))
+   #circleDF$lon <- unlist(lapply(centers$lon, function(x) x + radiusLon * cos(angle)))
+   #circleDF$lat <- unlist(lapply(centers$lat, function(x) x + radiusLat * sin(angle)))
+   return(circleDF)
+}
+
+
+AG <- sites %>% 
+   filter(site == "AG")
+
+centers <- AG %>% 
+   select(lat, lon = long)
+radius <- 0.2
+nPoints <- 100
+radius <- radius / 1000
+meanLat <- mean(centers$lat)
+# length per longitude changes with lattitude, so need correction
+radiusLon <- radius / 111 / cos(meanLat / 57.3)
+radiusLat <- radius / 111
+angle <- seq(0, 2 * pi, length.out = nPoints)
+
+circleDF_lon <- centers$lon + (radiusLon * cos(angle))
+   
+circleDF_lat <- centers$lat + (radiusLat * sin(angle))
+circleDF <- data.frame(
+   lon = circleDF_lon,
+   lat = circleDF_lat
+) 
+
+site_map <- get_map(location = c(lon = -93.158732, lat =  45.031724),
+                    maptype = "terrain",
+                    source = "stamen",
+                    zoom = 17)
+
+# Get background image with tree canopies
+canopy_bkgrd <- png::readPNG(here::here("ag_site.png"))
+
+wasp_radius_map <- ggmap(site_map, extent = "normal") +
+   # annotation_custom(rasterGrob(canopy_bkgrd,
+   #                              width = unit(1, "npc"),
+   #                              height = unit(1, "npc")),
+   #                   -Inf, Inf, -Inf, Inf) +
+   background_image(canopy_bkgrd) +
+   # Center point
+   geom_point(data = AG, aes(x = -93.15882, y = 45.031710),
+              size = 1.2,
+              colour = "red") +
+   theme_void()+
+   geom_point(data = AG, aes(x = -93.15870, y = 45.031720),
+              size = 82,
+              shape = 21,
+              colour = "red",
+              stroke = 1.5)  +
+   coord_cartesian()
+   
+wasp_radius_map
+ggsave(wasp_radius_map,
+       filename = "wasp_radius_map.tiff",
+       units = "mm",
+       dpi = 600,
+       width = 84,
+       height = 84)

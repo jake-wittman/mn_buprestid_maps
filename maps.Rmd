@@ -1,0 +1,22 @@
+---
+title: bup_maps
+author: Marie Hallinen
+date: 7/11/2019 
+output: word_document
+---
+
+```{r setup, include = FALSE, cache = TRUE}
+# Instructions for Marie
+# Before running this, comment out the code chunks in the clean_merge_map.R
+# script that save the maps!
+# If you want to have the pages oriented in landscape rather than portrait,
+# follow the directions here: https://stackoverflow.com/questions/52719576/unable-to-produce-landscape-orientation-microsoft-word-document-from-r-markdown
+knitr::opts_chunk$set(echo = FALSE)
+
+source(here::here("clean_merge_map.R"))
+```
+
+```{r, results = "hide", echo = FALSE, fig.height = 5.7, fig.width = 4.0, dpi = 300}
+combined_maps
+```
+
